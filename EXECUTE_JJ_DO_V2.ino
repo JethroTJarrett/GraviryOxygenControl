@@ -111,21 +111,23 @@ void loop()
       READINGS[INDEX] = DObig;           // Read the next sensor value
       SUM = SUM + READINGS[INDEX];       // Add the newest reading to the sum
       SUM = abs(SUM);                    // Keep SUM positive (sometimes it goes negative, I'm not sure why)
-      INDEX = INDEX+1;                   // Increment the index
-
-      if (INDEX >= WINDOW_SIZE) {        //Wrap index to 0 when it gets too big
-          INDEX = 0;
-        }
 
       SUMfloat = float(SUM);                           //Convert the string to a floating point number
       AVERAGED = SUMfloat / (WINDOW_SIZE * 1000);      // Divide the sum of the window by the window size for the result
 
       count=count+1;
+      INDEX = (INDEX+1) % WINDOW_SIZE;
+
+
+
+        
 
 //-----------------------------------------Print data the serial moniter
     Serial.print(count); 
     Serial.print(", ");
     Serial.print(INDEX); 
+    Serial.print(", ");
+    Serial.print(WINDOW_SIZE); 
     Serial.print(", ");
     Serial.print(potValue); 
     Serial.print(", ");
